@@ -3,6 +3,7 @@ import 'package:flutter_github_app/widget/gsy_tabbar_widget.dart';
 import 'package:flutter_github_app/common/style/gsy_style.dart';
 import 'package:flutter_github_app/widget/gsy_title_bar.dart';
 import 'package:flutter_github_app/common/utils/common_utils.dart';
+import 'package:flutter_github_app/widget/home_drawer.dart';
 import 'dynamic_page.dart';
 import 'trend_page.dart';
 import 'my_page.dart';
@@ -28,6 +29,7 @@ class HomePage extends StatelessWidget {
     ];
 
     return GSYTabBarWidget(
+      drawer: HomeDrawer(),
       type: GSYTabBarWidget.BOTTOM_TAB,
       tabItems: tabs,
       tabViews: [

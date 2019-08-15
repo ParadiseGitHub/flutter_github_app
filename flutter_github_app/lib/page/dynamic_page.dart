@@ -8,6 +8,10 @@ class DynamicPage extends StatefulWidget {
 class _DynamicPageState extends State<DynamicPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Center(
+        child: Text('动态'),
+      ),
+    );
   }
 }

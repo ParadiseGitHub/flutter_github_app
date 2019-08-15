@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///颜色
 class GSYColors {
   static const String primaryValueString = "#24292E";
   static const String primaryLightValueString = "#42464b";
@@ -39,6 +40,169 @@ class GSYColors {
       800: const Color(primaryDarkValue),
       900: const Color(primaryDarkValue),
     },
+  );
+}
+
+///文本样式
+class GSYConstant {
+  static const String app_defalut_share_url = "https://github.com/CarGuo/GSYGithubAppFlutter";
+
+  static const lagerTextSize = 30.0;
+  static const bigTextSize = 23.0;
+  static const normalTextSize = 18.0;
+  static const middleTextWhiteSize = 16.0;
+  static const smallTextSize = 14.0;
+  static const minTextSize = 12.0;
+
+  static const minText = TextStyle(
+    color: Color(GSYColors.subLightTextColor),
+    fontSize: minTextSize,
+  );
+
+  static const smallTextWhite = TextStyle(
+    color: Color(GSYColors.textColorWhite),
+    fontSize: smallTextSize,
+  );
+
+  static const smallText = TextStyle(
+    color: Color(GSYColors.mainTextColor),
+    fontSize: smallTextSize,
+  );
+
+  static const smallTextBold = TextStyle(
+    color: Color(GSYColors.mainTextColor),
+    fontSize: smallTextSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const smallSubLightText = TextStyle(
+    color: Color(GSYColors.subLightTextColor),
+    fontSize: smallTextSize,
+  );
+
+  static const smallActionLightText = TextStyle(
+    color: Color(GSYColors.actionBlue),
+    fontSize: smallTextSize,
+  );
+
+  static const smallMiLightText = TextStyle(
+    color: Color(GSYColors.miWhite),
+    fontSize: smallTextSize,
+  );
+
+  static const smallSubText = TextStyle(
+    color: Color(GSYColors.subTextColor),
+    fontSize: smallTextSize,
+  );
+
+  static const middleText = TextStyle(
+    color: Color(GSYColors.mainTextColor),
+    fontSize: middleTextWhiteSize,
+  );
+
+  static const middleTextWhite = TextStyle(
+    color: Color(GSYColors.textColorWhite),
+    fontSize: middleTextWhiteSize,
+  );
+
+  static const middleSubText = TextStyle(
+    color: Color(GSYColors.subTextColor),
+    fontSize: middleTextWhiteSize,
+  );
+
+  static const middleSubLightText = TextStyle(
+    color: Color(GSYColors.subLightTextColor),
+    fontSize: middleTextWhiteSize,
+  );
+
+  static const middleTextBold = TextStyle(
+    color: Color(GSYColors.mainTextColor),
+    fontSize: middleTextWhiteSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const middleTextWhiteBold = TextStyle(
+    color: Color(GSYColors.textColorWhite),
+    fontSize: middleTextWhiteSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const middleSubTextBold = TextStyle(
+    color: Color(GSYColors.subTextColor),
+    fontSize: middleTextWhiteSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const normalText = TextStyle(
+    color: Color(GSYColors.mainTextColor),
+    fontSize: normalTextSize,
+  );
+
+  static const normalTextBold = TextStyle(
+    color: Color(GSYColors.mainTextColor),
+    fontSize: normalTextSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const normalSubText = TextStyle(
+    color: Color(GSYColors.subTextColor),
+    fontSize: normalTextSize,
+  );
+
+  static const normalTextWhite = TextStyle(
+    color: Color(GSYColors.textColorWhite),
+    fontSize: normalTextSize,
+  );
+
+  static const normalTextMitWhiteBold = TextStyle(
+    color: Color(GSYColors.miWhite),
+    fontSize: normalTextSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const normalTextActionWhiteBold = TextStyle(
+    color: Color(GSYColors.actionBlue),
+    fontSize: normalTextSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const normalTextLight = TextStyle(
+    color: Color(GSYColors.primaryLightValue),
+    fontSize: normalTextSize,
+  );
+
+  static const largeText = TextStyle(
+    color: Color(GSYColors.mainTextColor),
+    fontSize: bigTextSize,
+  );
+
+  static const largeTextBold = TextStyle(
+    color: Color(GSYColors.mainTextColor),
+    fontSize: bigTextSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const largeTextWhite = TextStyle(
+    color: Color(GSYColors.textColorWhite),
+    fontSize: bigTextSize,
+  );
+
+  static const largeTextWhiteBold = TextStyle(
+    color: Color(GSYColors.textColorWhite),
+    fontSize: bigTextSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const largeLargeTextWhite = TextStyle(
+    color: Color(GSYColors.textColorWhite),
+    fontSize: lagerTextSize,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const largeLargeText = TextStyle(
+    color: Color(GSYColors.primaryValue),
+    fontSize: lagerTextSize,
+    fontWeight: FontWeight.bold,
   );
 }
 

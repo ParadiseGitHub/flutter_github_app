@@ -36,7 +36,7 @@ abstract class GSYStringBase {
 
   String login_text;
 
-  String Login_out;
+  String login_out;
 
   String home_reply;
 

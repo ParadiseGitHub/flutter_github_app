@@ -1,4 +1,4 @@
-import 'gsy_string_base.dart';
+import 'package:flutter_github_app/common/style/gsy_string_base.dart';
 
 class GSYStringZh extends GSYStringBase {
   @override
@@ -49,7 +49,7 @@ class GSYStringZh extends GSYStringBase {
   String login_text = "登录";
 
   @override
-  String Login_out = "退出登录";
+  String login_out = "退出登录";
 
   @override
   String home_reply = "问题反馈";

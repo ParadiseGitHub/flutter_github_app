@@ -49,7 +49,7 @@ class GSYStringEn extends GSYStringBase {
   String login_text = "Login";
 
   @override
-  String Login_out = "Logout";
+  String login_out = "Logout";
 
   @override
   String home_reply = "Feedback";

@@ -26,4 +26,31 @@ class NavigatorUtils {
   static goLogin(BuildContext context) {
     Navigator.pushReplacementNamed(context, LoginPage.sName);
   }
+
+  // Page页面的容器，做一次通用自定义
+  static Widget pageContainer(widget) {
+    return MediaQuery(
+      data: MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+        .copyWith(textScaleFactor: 1),
+      child: widget,
+    );
+  }
+
+  static Future<T> showGSYDialog<T>({
+    @required BuildContext context,
+    bool barrierDismissible = true,
+    WidgetBuilder builder,
+  }) {
+    return showDialog<T>(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (context) {
+        return MediaQuery(
+          ///不受系统字体缩放影响
+          data: MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+                .copyWith(textScaleFactor: 1),
+          child: SafeArea(child: builder(context)),
+        );
+      });
+  }
 }
