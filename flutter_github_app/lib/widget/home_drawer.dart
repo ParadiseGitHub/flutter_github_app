@@ -8,6 +8,7 @@ import 'package:flutter_github_app/common/style/gsy_style.dart';
 import 'package:flutter_github_app/common/utils/common_utils.dart';
 import 'package:flutter_github_app/common/model/User.dart';
 import 'package:flutter_github_app/common/redux/gsy_state.dart';
+import 'package:flutter_github_app/common/utils/navigator_utils.dart';
 
 class HomeDrawer extends StatelessWidget {
 
@@ -95,7 +96,7 @@ class HomeDrawer extends StatelessWidget {
                             onPress: () {
 //                              UserDao.clearAll(store);
 //                              SqlManager.close();
-//                              NavigatorUtils.goLogin(context);
+                              NavigatorUtils.goLogin(context);
                             },
                           ),
                           onTap: () {},
