@@ -29,7 +29,7 @@ class GSYColors {
   static const MaterialColor primarySwatch = const MaterialColor(
     primaryValue,
     const <int, Color>{
-      50: const Color(primaryLightValue),
+       50: const Color(primaryLightValue),
       100: const Color(primaryLightValue),
       200: const Color(primaryLightValue),
       300: const Color(primaryLightValue),

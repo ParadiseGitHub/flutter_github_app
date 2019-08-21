@@ -22,6 +22,7 @@ import 'package:flutter_github_app/common/localization/gsy_localizations_delegat
 void main() => runApp(FlutterReduxApp());
 
 class FlutterReduxApp extends StatelessWidget {
+
   /// 创建Store，引用 GSYState 中的 appReducer 实现 Reducer 方法
   /// initialState 初始化 State
   final store = Store<GSYState>(
@@ -45,7 +46,7 @@ class FlutterReduxApp extends StatelessWidget {
         return MaterialApp(
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
             GSYLocalizationsDelegate.delegate,
           ],
           locale: store.state.locale,

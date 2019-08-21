@@ -1,12 +1,13 @@
 import 'dart:async';
-
+import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter_github_app/common/style/gsy_style.dart';
 import 'package:flutter_github_app/common/utils/navigator_utils.dart';
 import 'package:flutter_github_app/common/redux/gsy_state.dart';
+import 'package:flutter_github_app/common/dao/user_dao.dart';
+
 
 class WelcomePage extends StatefulWidget {
   static final String sName = '/';
@@ -29,8 +30,14 @@ class _WelcomePageState extends State<WelcomePage> {
     hadInit = true;
     Store<GSYState> store = StoreProvider.of(context);
     Future.delayed(const Duration(seconds: 2, milliseconds: 500), () {
-      NavigatorUtils.goLogin(context);
-      return true;
+      UserDao.initUserInfo(store).then((res) {
+        if (res != null && res.result) {
+          NavigatorUtils.goHome(context);
+        } else {
+          NavigatorUtils.goLogin(context);
+        }
+        return true;
+      });
     });
 
   }

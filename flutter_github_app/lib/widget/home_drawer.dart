@@ -9,6 +9,7 @@ import 'package:flutter_github_app/common/utils/common_utils.dart';
 import 'package:flutter_github_app/common/model/User.dart';
 import 'package:flutter_github_app/common/redux/gsy_state.dart';
 import 'package:flutter_github_app/common/utils/navigator_utils.dart';
+import 'package:flutter_github_app/common/dao/user_dao.dart';
 
 class HomeDrawer extends StatelessWidget {
 
@@ -60,12 +61,12 @@ class HomeDrawer extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         UserAccountsDrawerHeader(
-                          accountName: Text('Paradise', style: GSYConstant.largeTextWhite),
-                          accountEmail: Text('paradise@gmail.com', style: GSYConstant.normalTextLight),
+                          accountName: Text(user.login ?? "---", style: GSYConstant.largeTextWhite),
+                          accountEmail: Text(user.email ?? user.name ?? "---", style: GSYConstant.normalTextLight),
                           currentAccountPicture: GestureDetector(
                             onTap: () {},
                             child: CircleAvatar(
-                              backgroundImage: NetworkImage('http://ww4.sinaimg.cn/large/006tNc79gy1g5z9t6g5d2j30me0m6tzd.jpg'),
+                              backgroundImage: NetworkImage(user.avatar_url ?? GSYICons.DEFAULT_REMOTE_PIC),
                             ),
                           ),
                           decoration: BoxDecoration(
@@ -94,7 +95,7 @@ class HomeDrawer extends StatelessWidget {
                             color: Colors.redAccent,
                             textColor: Color(GSYColors.textWhite),
                             onPress: () {
-//                              UserDao.clearAll(store);
+                              UserDao.clearAll(store);
 //                              SqlManager.close();
                               NavigatorUtils.goLogin(context);
                             },

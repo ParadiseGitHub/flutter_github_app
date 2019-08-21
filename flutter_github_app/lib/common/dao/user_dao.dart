@@ -10,6 +10,7 @@ import 'package:flutter_github_app/common/local/local_storage.dart';
 import 'package:flutter_github_app/common/config/config.dart';
 import 'package:flutter_github_app/common/redux/user_redux.dart';
 import 'package:flutter_github_app/common/model/User.dart';
+import 'package:flutter_github_app/common/utils/common_utils.dart';
 
 class UserDao {
 
@@ -50,12 +51,36 @@ class UserDao {
 
   ///初始化用户信息
   static initUserInfo(Store store) async {
+    var token = await LocalStorage.get(Config.TOKEN_KEY);
+    var res = await getUserInfoLocal();
+    if (res != null && res.result && token != null) {
+      store.dispatch(UpdateUserAction(res.data));
+    }
+
+    //读取主题
+    String themeIndex = await LocalStorage.get(Config.THEME_COLOR);
+    if (themeIndex != null && themeIndex.length != 0) {
+      CommonUtils.pushTheme(store, int.parse(themeIndex));
+    }
+
+    //切换语言
+    String localeIndex = await LocalStorage.get(Config.LOCALE);
+    if (localeIndex != null && localeIndex.length != 0) {
+      CommonUtils.changeLocale(store, int.parse(localeIndex));
+    }
 
   }
 
   ///获取本地登录用户信息
   static getUserInfoLocal() async {
-
+    var userText = await LocalStorage.get(Config.USER_INFO);
+    if (userText != null) {
+      var userMap = json.decode(userText);
+      User user = User.fromJson(userMap);
+      return DataResult(user, true);
+    } else {
+      return DataResult(null, false);
+    }
   }
 
   ///获取用户详细信息

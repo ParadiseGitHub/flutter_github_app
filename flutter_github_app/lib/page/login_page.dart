@@ -33,9 +33,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   initParams() async {
-    _userName = LocalStorage.get(Config.USER_NAME_KEY);
-    _password = LocalStorage.get(Config.PW_KEY);
-
+    _userName = await LocalStorage.get(Config.USER_NAME_KEY);
+    _password = await LocalStorage.get(Config.PW_KEY);
     userController.value = TextEditingValue(text: _userName ?? "");
     pwdController.value = TextEditingValue(text: _password ?? "");
   }
