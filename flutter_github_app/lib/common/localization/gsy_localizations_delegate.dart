@@ -13,12 +13,12 @@ class GSYLocalizationsDelegate extends LocalizationsDelegate<GSYLocalizations> {
     return ['en', 'zh'].contains(locale.languageCode);
   }
 
+  ///根据locale，创建一个对象用于提供当前locale下的文本显示
   @override
   Future<GSYLocalizations> load(Locale locale) {
     return SynchronousFuture<GSYLocalizations>(GSYLocalizations(locale));
   }
 
-  ///根据locale，创建一个对象用于提供当前locale下的文本显示
   @override
   bool shouldReload(LocalizationsDelegate<GSYLocalizations> old) {
     return false;
