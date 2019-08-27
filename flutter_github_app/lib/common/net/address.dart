@@ -28,4 +28,22 @@ class Address {
     return "${host}users/$userName/starred?sort=$sort";
   }
 
+  ///用户收到的事件信息
+  static getEventReceived(userName) {
+    return "${host}users/$userName/received_events";
+  }
+
+  ///处理分页参数
+  static getPageParams(tab, page, [pageSize = Config.PAGE_SIZE]) {
+    if (page != null) {
+      if (pageSize != null) {
+        return "${tab}page=$page&per_page=$pageSize";
+      } else {
+        return "${tab}page=$page";
+      }
+    } else {
+      return "";
+    }
+  }
+
 }

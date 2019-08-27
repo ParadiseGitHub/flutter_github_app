@@ -74,7 +74,6 @@ class _GSYPullLoadWidgetState extends State<GSYPullLoadWidget> {
         print(e);
       }
     });
-
     super.initState();
   }
 
@@ -140,7 +139,8 @@ class _GSYPullLoadWidgetState extends State<GSYPullLoadWidget> {
           ? widget.control.dataList.length + 2
           : widget.control.dataList.length + 1;
     } else {
-      ///如果不需要头部，在没有数据时，固定返回数量1用于空页面呈现
+      ///不需要头部
+      ///如果没有数据，固定返回数量1用于空页面呈现
       ///如果有数据,因为底部加载更多选项，需要对列表数据总数+1
       return widget.control.dataList.length + 1;
     }

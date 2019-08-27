@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/common/style/gsy_style.dart';
-import 'package:flutter_github_app/widget/network_cache_image.dart';
+//import 'package:flutter_github_app/widget/network_cache_image.dart';
 
 class GSYUserIconWidget extends StatelessWidget {
 
@@ -22,7 +22,8 @@ class GSYUserIconWidget extends StatelessWidget {
       child: ClipOval(
         child: FadeInImage(
           placeholder: AssetImage(GSYICons.DEFAULT_USER_ICON),
-          image: NetworkCacheImage(image),
+          image: NetworkImage(image),
+          //NetworkCacheImage(image),
           fit: BoxFit.fitWidth,
           width: width,
           height: height,

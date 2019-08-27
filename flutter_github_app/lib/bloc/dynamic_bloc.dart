@@ -9,8 +9,9 @@ class DynamicBloc {
   int _page = 1;
 
   requestRefresh(String userName, {doNextFlag = true}) async {
+    
     pageReset();
-    var res = await EventDao.getEventReceived(userName, page: _page, needDb: false);
+    var res = await EventDao.getEventReceived(userName, page: _page, needDb: true);
     changeLoadMoreStatus(getLoadMoreStatus(res));
     refreshData(res);
     if (doNextFlag) {

@@ -172,7 +172,7 @@ class CommonUtils {
   }
 
   static ThemeData getThemeData(Color color) {
-    return ThemeData(primarySwatch: color, platform: TargetPlatform.android);
+    return ThemeData(primarySwatch: color, platform: TargetPlatform.iOS);
   }
 
 }

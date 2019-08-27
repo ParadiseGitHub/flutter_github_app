@@ -26,7 +26,7 @@ class _DynamicPageState extends State<DynamicPage> with AutomaticKeepAliveClient
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      //showRefreshLoading();
+      showRefreshLoading();
     }
   }
 
@@ -83,7 +83,13 @@ class _DynamicPageState extends State<DynamicPage> with AutomaticKeepAliveClient
   void didChangeDependencies() {
     //请求更新
     if (dynamicBloc.getDataLength() == 0) {
+      dynamicBloc.changeNeedHeaderStatus(false);
 
+      //先读取数据库
+      dynamicBloc.requestRefresh(_getStore().state.userInfo?.login,
+        doNextFlag: false).then((_) {
+          showRefreshLoading();
+      });
     }
     super.didChangeDependencies();
   }

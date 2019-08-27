@@ -75,7 +75,6 @@ class EventItem extends StatelessWidget {
 }
 
 class EventViewModel {
-
   String actionUser;
   String actionUserPic;
   String actionDes;
