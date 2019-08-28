@@ -17,7 +17,7 @@ class HttpManager {
 
   Dio _dio = new Dio(); // 使用默认配置
 
-  final TokenInterceptors _tokenInterceptors = new TokenInterceptors();
+  final TokenInterceptors _tokenInterceptors = TokenInterceptors();
 
   HttpManager() {
     _dio.interceptors.add(HeaderInterceptors());

@@ -28,6 +28,7 @@ class _WelcomePageState extends State<WelcomePage> {
     }
 
     hadInit = true;
+
     Store<GSYState> store = StoreProvider.of(context);
     Future.delayed(const Duration(seconds: 2, milliseconds: 500), () {
       UserDao.initUserInfo(store).then((res) {

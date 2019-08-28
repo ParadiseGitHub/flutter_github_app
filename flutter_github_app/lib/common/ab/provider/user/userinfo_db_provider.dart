@@ -64,19 +64,19 @@ class UserInfoDbProvider extends BaseDbProvider {
   Future insert(String userName, String eventMapString) async {
     Database db = await getDataBase();
     var userProvider = await _getUserProvider(db, userName);
+
     if (userProvider != null) {
       await db.delete(name, where: "$columnUserName = ?", whereArgs: [userName]);
     }
     return await db.insert(name, toMap(userName, eventMapString));
   }
 
-  ///获取事件数据
+  ///获取用户数据
   Future<User> getUserInfo(String userName) async {
     Database db = await getDataBase();
     var userProvider = await _getUserProvider(db, userName);
+
     if (userProvider != null) {
-
-
       ///使用 compute 的 Isolate 优化 json decode
       var mapData = await compute(CodeUtils.decodeMapResult, userProvider.data as String);
       return User.fromJson(mapData);

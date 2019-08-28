@@ -11,6 +11,7 @@ import 'package:flutter_github_app/common/config/config.dart';
 import 'package:flutter_github_app/common/redux/user_redux.dart';
 import 'package:flutter_github_app/common/model/User.dart';
 import 'package:flutter_github_app/common/utils/common_utils.dart';
+import 'package:flutter_github_app/common/ab/provider/user/userinfo_db_provider.dart';
 
 class UserDao {
 
@@ -35,7 +36,7 @@ class UserDao {
     httpManager.clearAuthorization();
 
     var res = await httpManager.netFetch(Address.getAuthorization(), json.encode(requestParams), null, new Options(method: "post"));
-    var resultData = null;
+    var resultData;
     if (res != null && res.result) {
       await LocalStorage.save(Config.PW_KEY, password);
       var resultData = await getUserInfo(null);
@@ -69,6 +70,7 @@ class UserDao {
       CommonUtils.changeLocale(store, int.parse(localeIndex));
     }
 
+    return new DataResult(res.data, (res.result && (token != null)));
   }
 
   ///获取本地登录用户信息
@@ -84,9 +86,9 @@ class UserDao {
   }
 
   ///获取用户详细信息
-  ///获取用户详细信息
   static getUserInfo(userName, {needDb = false}) async {
-    //UserInfoDbProvider provider = new UserInfoDbProvider();
+    UserInfoDbProvider provider = new UserInfoDbProvider();
+
     next() async {
       var res;
       if (userName == null) {
@@ -95,38 +97,37 @@ class UserDao {
         res = await httpManager.netFetch(Address.getUserInfo(userName), null, null, null);
       }
       if (res != null && res.result) {
-//        String starred = "---";
-//        if (res.data["type"] != "Organization") {
-//          var countRes = await getUserStaredCountNet(res.data["login"]);
-//          if (countRes.result) {
-//            starred = countRes.data;
-//          }
-//        }
+        String starred = "---";
+        if (res.data["type"] != "Organization") {
+          var countRes = await getUserStaredCountNet(res.data["login"]);
+          if (countRes.result) {
+            starred = countRes.data;
+          }
+        }
         User user = User.fromJson(res.data);
-        //user.starred = starred;
-        user.starred = '999';
+        user.starred = starred;
         if (userName == null) {
           LocalStorage.save(Config.USER_INFO, json.encode(user.toJson()));
         }
-//        else {
-//          if (needDb) {
-//            provider.insert(userName, json.encode(user.toJson()));
-//          }
-//        }
+        else {
+          if (needDb) {
+            provider.insert(userName, json.encode(user.toJson()));
+          }
+        }
         return new DataResult(user, true);
       } else {
         return new DataResult(res.data, false);
       }
     }
 
-//    if (needDb) {
-//      User user = await provider.getUserInfo(userName);
-//      if (user == null) {
-//        return await next();
-//      }
-//      DataResult dataResult = new DataResult(user, true, next: next);
-//      return dataResult;
-//    }
+    if (needDb) {
+      User user = await provider.getUserInfo(userName);
+      if (user == null) {
+        return await next();
+      }
+      DataResult dataResult = new DataResult(user, true, next: next);
+      return dataResult;
+    }
     return await next();
   }
 
@@ -169,7 +170,7 @@ class UserDao {
   }
 
   ///获取用户相关通知
-  static getNotifyDao() async {
+  static getNotifyDao(bool all, bool participating, page) async {
 
   }
 
