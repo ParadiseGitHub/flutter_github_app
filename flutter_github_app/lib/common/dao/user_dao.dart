@@ -196,7 +196,22 @@ class UserDao {
 
   ///组织成员
   static getMemberDao(userName, page) async {
+    String url = Address.getMember(userName) + Address.getPageParams("?", page);
+    var res = await httpManager.netFetch(url, null, null, null);
 
+    if (res != null && res.result) {
+      List<User> list = List();
+      var data = res.data;
+      if (data == null || data.length == 0) {
+        return DataResult(null, false);
+      }
+      for (int i = 0; i < data.length; i++) {
+        list.add(User.fromJson(data[i]));
+      }
+      return DataResult(list, true);
+    } else {
+      return DataResult(null, false);
+    }
   }
 
   ///更新用户信息

@@ -70,7 +70,6 @@ mixin GSYListState<T extends StatefulWidget> on State<T>, AutomaticKeepAliveClie
     return null;
   }
 
-
   @protected
   Future<Null> onLoadMore() async {
     if (isLoading) {
@@ -110,7 +109,6 @@ mixin GSYListState<T extends StatefulWidget> on State<T>, AutomaticKeepAliveClie
       }
     }
   }
-
 
   @protected
   resolveDataResult(res) {
@@ -158,6 +156,10 @@ mixin GSYListState<T extends StatefulWidget> on State<T>, AutomaticKeepAliveClie
     isShow = true;
     super.initState();
     pullLoadWidgetControl.needHeader = needHeader;
+    pullLoadWidgetControl.dataList = getDataList;
+    if (pullLoadWidgetControl.dataList.length == 0 && isRefreshFirst) {
+      showRefreshLoading();
+    }
   }
 
   @override

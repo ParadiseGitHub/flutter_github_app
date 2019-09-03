@@ -20,3 +20,7 @@ class UpdateUserAction {
   final User userInfo;
   UpdateUserAction(this.userInfo);
 }
+
+class FetchUserAction {
+
+}

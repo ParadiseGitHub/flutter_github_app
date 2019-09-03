@@ -33,6 +33,17 @@ class Address {
     return "${host}users/$userName/received_events";
   }
 
+  ///用户相关的事件信息 get
+  static getEvent(userName) {
+    return "${host}users/$userName/events";
+  }
+
+  ///组织成员
+  static getMember(orgs) {
+    return "${host}orgs/$orgs/members";
+  }
+
+
   ///处理分页参数
   static getPageParams(tab, page, [pageSize = Config.PAGE_SIZE]) {
     if (page != null) {

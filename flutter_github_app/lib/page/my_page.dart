@@ -75,13 +75,67 @@ class _MyPageState extends BasePersonState<MyPage> {
     super.initState();
   }
 
+  @override
+  void didChangeDependencies() {
+    if (pullLoadWidgetControl.dataList.length == 0) {
+      showRefreshLoading();
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
+  requestRefresh() async {
+    if (_getUserName() != null) {
+      ///通过 redux 提交更新用户数据行为
+      ///触发网络请求更新
+      _getStore().dispatch(FetchUserAction());
+
+      getUserOrg(_getUserName());
+
+      getHonor(_getUserName());
+
+      _refreshNotify();
+    }
+    return await _getDataLogic();
+  }
+
+  @override
+  requestLoadMore() async {
+    return await _getDataLogic();
+  }
+
+  _getDataLogic() async {
+    if (_getUserName() == null) {
+      return [];
+    }
+    if (getUserType() == "Organization") {
+      return await UserDao.getMemberDao(_getUserName(), page);
+    }
+    return await EventDao.getEventDao(_getUserName(), page: page, needDb: page <= 1);
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('我的'),
-      ),
+    super.build(context);  // AutomaticKeepAliveClientMixin
+    return StoreBuilder<GSYState>(
+      builder: (context, store) {
+        return GSYNestedPullLoadWidget(
+          pullLoadWidgetControl,
+          (BuildContext context, int index) => renderItem(
+            index, store.state.userInfo, beStaredCount, notifyColor, () {
+            _refreshNotify();
+          }, orgList),
+          handleRefresh,
+          onLoadMore,
+          refreshKey: refreshIKey,
+          headerSliverBuilder: (context, _) {
+            return sliverBuilder(context, _, store.state.userInfo, notifyColor, beStaredCount, () {
+              _refreshNotify();
+            });
+          },
+        );
+      },
     );
   }
 }

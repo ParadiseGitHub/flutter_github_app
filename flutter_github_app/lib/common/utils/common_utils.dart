@@ -6,6 +6,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_github_app/common/redux/locale_redux.dart';
 import 'package:flutter_github_app/common/redux/gsy_state.dart';
+import 'package:flutter_github_app/common/net/address.dart';
 import 'package:flutter_github_app/common/redux/theme_redux.dart';
 import 'package:flutter_github_app/widget/gsy_flex_button.dart';
 import 'package:flutter_github_app/common/style/gsy_style.dart';
@@ -32,6 +33,10 @@ class CommonUtils {
       return date.toString();
     }
     return date.toString().substring(0, 10);
+  }
+  
+  static String getUserChartAddress(String userName) {
+    return Address.graphicHost + GSYColors.primaryValueString.replaceAll("#", "") + "/" + userName;
   }
 
   ///日期格式转换

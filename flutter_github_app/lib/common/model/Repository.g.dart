@@ -48,7 +48,7 @@ Repository _$RepositoryFromJson(Map<String, dynamic> json) {
     json['parent'] == null
         ? null
         : Repository.fromJson(json['parent'] as Map<String, dynamic>),
-  );
+  )..allIssueCount = json['allIssueCount'] as int;
 }
 
 Map<String, dynamic> _$RepositoryToJson(Repository instance) =>
@@ -83,4 +83,5 @@ Map<String, dynamic> _$RepositoryToJson(Repository instance) =>
       'topics': instance.topics,
       'owner': instance.owner,
       'parent': instance.parent,
+      'allIssueCount': instance.allIssueCount,
     };

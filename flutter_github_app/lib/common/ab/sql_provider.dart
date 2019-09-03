@@ -1,12 +1,11 @@
 import 'dart:async';
-/**
- * 数据库表
- * Created by guoshuyu
- * Date: 2018-08-03
- */
-import 'package:flutter_github_app/common/ab/sql_manager.dart';
 import 'package:meta/meta.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:flutter_github_app/common/ab/sql_manager.dart';
+
+/**
+ * 数据库表
+ */
 
 abstract class BaseDbProvider {
   bool isTableExist = false;

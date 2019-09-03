@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/page/home_page.dart';
 import 'package:flutter_github_app/page/login_page.dart';
+import 'package:flutter_github_app/page/person_page.dart';
 import 'package:flutter_github_app/page/my_page.dart';
 import 'package:flutter_github_app/page/trend_page.dart';
 import 'package:flutter_github_app/page/login_page.dart';
+import 'package:flutter_github_app/page/notify_page.dart';
 
 class NavigatorUtils {
   // 替换
@@ -27,6 +30,16 @@ class NavigatorUtils {
     Navigator.pushReplacementNamed(context, LoginPage.sName);
   }
 
+  // 个人中心
+  static goPerson(BuildContext context, String userName) {
+    NavigatorRouter(context, PersonPage(userName));
+  }
+
+  // 公共打开方式
+  static NavigatorRouter(BuildContext context, Widget widget) {
+    return Navigator.push(context, CupertinoPageRoute(builder: (context) => pageContainer(widget)));
+  }
+
   // Page页面的容器，做一次通用自定义
   static Widget pageContainer(widget) {
     return MediaQuery(
@@ -34,6 +47,11 @@ class NavigatorUtils {
         .copyWith(textScaleFactor: 1),
       child: widget,
     );
+  }
+  
+  // 仓库详情通知
+  static Future goNotifyPage(BuildContext context) {
+    return NavigatorRouter(context, NotifyPage());
   }
 
   static Future<T> showGSYDialog<T>({
