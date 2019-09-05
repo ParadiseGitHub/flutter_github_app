@@ -10,7 +10,6 @@ import 'package:flutter_github_app/common/model/Event.dart';
 import 'package:flutter_github_app/common/utils/event_utils.dart';
 
 
-
 class DynamicPage extends StatefulWidget {
   @override
   _DynamicPageState createState() => _DynamicPageState();

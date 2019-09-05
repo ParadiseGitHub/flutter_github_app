@@ -3,6 +3,9 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter_github_app/common/net/address.dart';
 import 'package:flutter_github_app/common/net/http_manager.dart';
+import 'package:flutter_github_app/common/model/TrendingRepoModel.dart';
+import 'package:flutter_github_app/common/dao/dao_result.dart';
+import 'package:flutter_github_app/common/net/trending/github_trending.dart';
 
 class ReposDao {
 
@@ -12,8 +15,38 @@ class ReposDao {
    * @param since 数据时长， 本日，本周，本月
    * @param languageType 语言
    */
-  static getTrendDao() {
+  static getTrendDao({since = 'daily', languageType, page = 0, needDb = true}) async {
+    //TrendRepositoryDbProvider provider = new TrendRepositoryDbProvider();
+    String languageTypeDb = languageType ?? "*";
 
+    next() async {
+      String url = Address.trending(since, languageType);
+      var res = await GitHubTrending().fetchTrending(url);
+      if (res != null && res.result && res.data.length > 0) {
+        List<TrendingRepoModel> list = List();
+        var data = res.data;
+        if (needDb) {
+          //provider.insert(languageTypeDb, since, json.encode(data));
+        }
+        for (int i = 0; i < data.length; i++) {
+          TrendingRepoModel model = data[i];
+          list.add(model);
+        }
+        return DataResult(list, true);
+      } else {
+        return DataResult(null, false);
+      }
+    }
+
+    if (needDb) {
+//      List<TrendingRepoModel> list = await provider.getData(languageTypeDb, since);
+//      if (list == null || list.length == 0) {
+//        return await next();
+//      }
+//      DataResult dataResult = DataResult(list, true, next: next);
+//      return dataResult;
+      return await next();
+    }
   }
 
   ///仓库的详情数据

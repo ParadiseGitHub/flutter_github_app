@@ -7,7 +7,7 @@ import 'package:flutter_github_app/widget/pull/gsy_pull_load_widget.dart';
  * 下拉刷新、上拉加载更多：列表通用State
  */
 
-mixin GSYListState<T extends StatefulWidget> on State<T>, AutomaticKeepAliveClientMixin<T> {
+mixin GSYListStateMixin<T extends StatefulWidget> on State<T>, AutomaticKeepAliveClientMixin<T> {
 
   bool isShow = false;
   bool isLoading = false;

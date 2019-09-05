@@ -17,8 +17,8 @@ import 'package:flutter_github_app/widget/user_item.dart';
 import 'package:flutter_github_app/common/dao/repos_dao.dart';
 
 
-abstract class BasePersonState<T extends StatefulWidget> extends State<T> with
-    AutomaticKeepAliveClientMixin<T>, GSYListState<T>, SingleTickerProviderStateMixin{
+abstract class BasePersonState<T extends StatefulWidget> extends State<T>
+    with AutomaticKeepAliveClientMixin<T>, GSYListStateMixin<T>, SingleTickerProviderStateMixin {
 
   final GlobalKey<NestedScrollViewRefreshIndicatorState> refreshIKey = GlobalKey<NestedScrollViewRefreshIndicatorState>();
 
@@ -145,7 +145,7 @@ abstract class BasePersonState<T extends StatefulWidget> extends State<T> with
             var radius = Radius.circular(10 - shrinkOffset/bottomSize * 10);
             return SizedBox.expand(
               child: Padding(
-                padding: EdgeInsets.only(left: 0.0, right: 0.0, bottom: 10.0),
+                padding: EdgeInsets.only(bottom: 10.0),
                 /// MultiProvider 共享 HonorModel 状态
                 child: MultiProvider(
                   providers: [
@@ -188,7 +188,6 @@ abstract class BasePersonState<T extends StatefulWidget> extends State<T> with
             );
           }
         )
-
       ),
 
     ];
