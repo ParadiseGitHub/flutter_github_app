@@ -6,6 +6,7 @@ import 'package:flutter_github_app/common/net/http_manager.dart';
 import 'package:flutter_github_app/common/model/TrendingRepoModel.dart';
 import 'package:flutter_github_app/common/dao/dao_result.dart';
 import 'package:flutter_github_app/common/net/trending/github_trending.dart';
+import 'package:flutter_github_app/common/ab/provider/repos/repository_trend_db_provider.dart';
 
 class ReposDao {
 
@@ -16,7 +17,7 @@ class ReposDao {
    * @param languageType 语言
    */
   static getTrendDao({since = 'daily', languageType, page = 0, needDb = true}) async {
-    //TrendRepositoryDbProvider provider = new TrendRepositoryDbProvider();
+    RepositoryTrendDbProvider provider = RepositoryTrendDbProvider();
     String languageTypeDb = languageType ?? "*";
 
     next() async {
@@ -26,7 +27,7 @@ class ReposDao {
         List<TrendingRepoModel> list = List();
         var data = res.data;
         if (needDb) {
-          //provider.insert(languageTypeDb, since, json.encode(data));
+          provider.insert(json.encode(data), since, languageTypeDb);
         }
         for (int i = 0; i < data.length; i++) {
           TrendingRepoModel model = data[i];
@@ -39,13 +40,12 @@ class ReposDao {
     }
 
     if (needDb) {
-//      List<TrendingRepoModel> list = await provider.getData(languageTypeDb, since);
-//      if (list == null || list.length == 0) {
-//        return await next();
-//      }
-//      DataResult dataResult = DataResult(list, true, next: next);
-//      return dataResult;
-      return await next();
+      List<TrendingRepoModel> list  = await provider.getData(since, languageTypeDb);
+      if (list == null || list.length == 0) {
+        return await next();
+      }
+      DataResult dataResult = DataResult(list, true, next: next);
+      return dataResult;
     }
   }
 

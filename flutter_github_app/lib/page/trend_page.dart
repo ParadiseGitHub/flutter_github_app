@@ -209,6 +209,7 @@ class _TrendPageState extends State<TrendPage>
               ///下拉刷新
               return NestedScrollViewRefreshIndicator(
                 key: refreshIndicatorKey,
+                onRefresh: requestRefresh,
                 ///嵌套滚动
                 child: NestedScrollView(
                   controller: scrollController,
@@ -226,7 +227,6 @@ class _TrendPageState extends State<TrendPage>
                         },
                       ),
                 ),
-                onRefresh: requestRefresh,
               );
             },
           ),
@@ -252,12 +252,13 @@ class _TrendPageState extends State<TrendPage>
             duration: const Duration(milliseconds: 10),
           ),
           builder: (BuildContext context, double shrinkOffset, bool overlapsContent) {
+            print('shrinkOffset = $shrinkOffset');
             ///根据数值计算偏差
             var lr = 10 - shrinkOffset / 65 * 10;
             var radius = Radius.circular(4 - shrinkOffset / 65 * 4);
             return SizedBox.expand(
               child: Padding(
-                padding: EdgeInsets.only(top: lr, bottom: 15.0, left: lr, right: lr),
+                padding: EdgeInsets.only(top: lr, bottom: 10.0, left: lr, right: lr),
                 child: _renderHeader(store, radius),
               ),
             );
@@ -278,7 +279,7 @@ class TrendTypeModel {
 }
 
 ///趋势数据时间过滤
-trendTime(BuildContext context) {
+ trendTime(BuildContext context) {
   return [
     TrendTypeModel(CommonUtils.getLocale(context).trend_day, "daily"),
     TrendTypeModel(CommonUtils.getLocale(context).trend_week, "weekly"),

@@ -59,7 +59,7 @@ class ReposItem extends StatelessWidget {
                       height: 40.0,
                       image: reposViewModel.ownerPic,
                       onPressed: () {
-                        NavigatorUtils.goPerson(context, reposViewModel.ownerName);
+                        //NavigatorUtils.goPerson(context, reposViewModel.ownerName);
                       },
                     ),
                     Expanded(
@@ -101,11 +101,11 @@ class ReposItem extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  margin: EdgeInsets.only(top: 6.0, bottom: 2.0),
+                  margin: EdgeInsets.only(top: 6.0),
                   alignment: Alignment.topLeft,
                 ),
 
-                Padding(padding: EdgeInsets.all(10.0)),
+                Padding(padding: EdgeInsets.all(5.0)),
 
                 ///仓库状态数值
                 Row(
