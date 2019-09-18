@@ -18,7 +18,12 @@ EventPayload _$EventPayloadFromJson(Map<String, dynamic> json) {
     ..refType = json['ref_type'] as String
     ..masterBranch = json['master_branch'] as String
     ..description = json['description'] as String
-    ..pusherType = json['pusher_type'] as String;
+    ..pusherType = json['pusher_type'] as String
+    ..commits = (json['commits'] as List)
+        ?.map((e) => e == null
+            ? null
+            : PushEventCommit.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$EventPayloadToJson(EventPayload instance) =>
@@ -34,4 +39,5 @@ Map<String, dynamic> _$EventPayloadToJson(EventPayload instance) =>
       'master_branch': instance.masterBranch,
       'description': instance.description,
       'pusher_type': instance.pusherType,
+      'commits': instance.commits,
     };

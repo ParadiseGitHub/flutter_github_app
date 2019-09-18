@@ -8,6 +8,7 @@ import 'package:flutter_github_app/common/ab/sql_manager.dart';
  */
 
 abstract class BaseDbProvider {
+
   bool isTableExist = false;
 
   tableSqlString();

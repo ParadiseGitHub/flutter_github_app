@@ -123,6 +123,31 @@ class EventUtils {
 
   ///跳转
   static ActionUtils(BuildContext context, Event event, currentRepository) {
+    if (event.repo == null) {
+      NavigatorUtils.goPerson(context, event.actor.login);
+      return;
+    }
 
+    String owner = event.repo.name.split("/")[0];
+    String repositoryName = event.repo.name.split("/")[1];
+    String fullName = owner + '/' + repositoryName;
+
+    switch (event.type) {
+      case 'PushEvent':
+        if (event.payload.commits == null) {
+          if (fullName.toLowerCase() == currentRepository.toLowerCase()) {
+            return;
+          }
+          NavigatorUtils.goReposDetail(context, owner, repositoryName);
+        }
+        break;
+        
+      default:
+        if (fullName.toLowerCase() == currentRepository.toLowerCase()) {
+          return;
+        }
+        NavigatorUtils.goReposDetail(context, owner, repositoryName);
+        break;
+    }
   }
 }

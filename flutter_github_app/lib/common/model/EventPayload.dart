@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'PushEventCommit.dart';
 
 part 'EventPayload.g.dart';
 
@@ -23,7 +24,7 @@ class EventPayload {
   @JsonKey(name: "pusher_type")
   String pusherType;
 
-//  List<PushEventCommit> commits;
+  List<PushEventCommit> commits;
 //  Release release;
 //  Issue issue;
 //  IssueEvent comment;

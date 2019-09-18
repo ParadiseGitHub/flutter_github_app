@@ -8,6 +8,8 @@ import 'package:flutter_github_app/page/my_page.dart';
 import 'package:flutter_github_app/page/trend_page.dart';
 import 'package:flutter_github_app/page/login_page.dart';
 import 'package:flutter_github_app/page/notify_page.dart';
+import 'package:flutter_github_app/page/repository_detail_page.dart';
+import 'package:flutter_github_app/common/router/animation_route.dart';
 
 class NavigatorUtils {
   // 替换
@@ -33,6 +35,14 @@ class NavigatorUtils {
   // 个人中心
   static goPerson(BuildContext context, String userName) {
     NavigatorRouter(context, PersonPage(userName));
+  }
+
+  // 仓库详情
+  static goReposDetail(BuildContext context, String userName, String reposName) {
+    ///利用 SizeRoute 动画打开
+    return Navigator.push(context, SizeRoute(
+      widget: pageContainer(RepositoryDetailPage(userName, reposName)),
+    ));
   }
 
   // 公共打开方式

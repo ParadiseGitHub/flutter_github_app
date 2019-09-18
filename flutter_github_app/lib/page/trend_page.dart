@@ -279,7 +279,7 @@ class TrendTypeModel {
 }
 
 ///趋势数据时间过滤
- trendTime(BuildContext context) {
+trendTime(BuildContext context) {
   return [
     TrendTypeModel(CommonUtils.getLocale(context).trend_day, "daily"),
     TrendTypeModel(CommonUtils.getLocale(context).trend_week, "weekly"),

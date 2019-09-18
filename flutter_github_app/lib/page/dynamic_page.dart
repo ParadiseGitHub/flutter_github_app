@@ -63,7 +63,7 @@ class _DynamicPageState extends State<DynamicPage> with AutomaticKeepAliveClient
     return EventItem(
       eventViewModel,
       onPressed: () {
-        //EventUtils.ActionUtils(context, e, "");
+        EventUtils.ActionUtils(context, e, "");
       },
     );
   }

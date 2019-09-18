@@ -28,6 +28,26 @@ class Address {
     return "${host}users/$userName/starred?sort=$sort";
   }
 
+  ///branch get
+  static getBranches(userName, repoName) {
+    return "${host}repos/$userName/$repoName/forks";
+  }
+
+  ///关注仓库 put
+  static resolveStarRepos(userName, repoName) {
+    return "${host}user/starred/$userName/$repoName";
+  }
+
+  ///订阅仓库 put
+  static resolveWatcherRepos(userName, repoName) {
+    return "${host}user/subscriptions/$userName/$repoName";
+  }
+
+  ///README 文件地址 get
+  static readmeFile(reposNameFullName, curBranch) {
+    return host + "repos/" + reposNameFullName + "/" + "readme" + ((curBranch == null) ? "" : ("?ref=" + curBranch));
+  }
+
   ///用户收到的事件信息
   static getEventReceived(userName) {
     return "${host}users/$userName/received_events";
