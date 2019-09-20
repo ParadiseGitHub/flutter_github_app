@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter_github_app/common/model/User.dart';
+import 'package:flutter_github_app/common/model/License.dart';
 
 part 'Repository.g.dart';
 
@@ -85,7 +86,7 @@ class Repository {
 
   Repository parent;
 
-//  License license;
+  License license;
 //
 //  RepositoryPermissions permissions;
 
