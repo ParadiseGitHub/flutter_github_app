@@ -125,7 +125,7 @@ class Repository {
       this.owner,
       this.parent,
 //      this.permissions,
-//      this.license,
+      this.license,
       );
 
   Repository.empty();

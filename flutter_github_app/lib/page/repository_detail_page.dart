@@ -11,6 +11,7 @@ import 'package:flutter_github_app/widget/gsy_bottom_action_bar.dart';
 import 'package:flutter_github_app/widget/gsy_common_option_widget.dart';
 import 'package:flutter_github_app/page/repository_detail_readme_page.dart';
 import 'package:flutter_github_app/page/repostory_detail_info_page.dart';
+import 'package:flutter_github_app/widget/animation/curves_bezier.dart';
 
 class RepositoryDetailPage extends StatefulWidget {
   final String userName;
@@ -41,10 +42,10 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> with Single
 //  GlobalKey<RepositoryDetailFileListPageState> fileListKey =
 //  new GlobalKey<RepositoryDetailFileListPageState>();
 //
-//  /// 详情信息页的 GlobalKey ，可用于当前控件控制文件也行为
-//  GlobalKey<ReposDetailInfoPageState> infoListKey =
-//  new GlobalKey<ReposDetailInfoPageState>();
-//
+  /// 详情信息页的 GlobalKey ，可用于当前控件控制文件也行为
+  GlobalKey<ReposDetailInfoPageState> infoListKey =
+  new GlobalKey<ReposDetailInfoPageState>();
+
   /// readme 页面的 GlobalKey ，可用于当前控件控制文件也行为
   GlobalKey<RepositoryDetailReadmePageState> readmeKey =
   new GlobalKey<RepositoryDetailReadmePageState>();
@@ -72,7 +73,15 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> with Single
       ? GSYICons.REPOS_ITEM_STARED
       : GSYICons.REPOS_ITEM_STAR;
 
-    BottomStatusModel model = BottomStatusModel(watchText, starText, watchIcon, starIcon, result.data["watch"], result.data["star"]);
+    BottomStatusModel model = BottomStatusModel(
+      watchText,
+      starText,
+      watchIcon,
+      starIcon,
+      result.data["watch"],
+      result.data["star"],
+    );
+
     setState(() {
       bottomStatusModel = model;
       tarBarControl.footerButton = _getBottomWidget();
@@ -215,7 +224,8 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> with Single
             tabItems: _renderTabItem(),
             resizeToAvoidBottomPadding: false,
             tabViews: <Widget>[
-
+              ReposDetailInfoPage(widget.userName, widget.repoName, titleOptionControl, key: infoListKey),
+              RepositoryDetailReadmePage(widget.userName, widget.repoName, key: readmeKey),
             ],
             backgroundColor: GSYColors.primarySwatch,
             indicatorColor: Color(GSYColors.white),
@@ -226,6 +236,18 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> with Single
             onPageChanged: (index) {
               reposDetailModel.setCurrentIndex(index);
             },
+
+            ///悬浮按键，增加出现动画
+            floatingActionButton: ScaleTransition(
+              scale: CurvedAnimation(parent: animationController, curve: CurveBezier()),
+              child: FloatingActionButton(
+                onPressed: () {
+                  _createIssue();
+                },
+                child: Icon(Icons.add),
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
+            ),
 
             ///悬浮按键位置
             floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

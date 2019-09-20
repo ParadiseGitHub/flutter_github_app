@@ -415,10 +415,11 @@ class ReposHeaderViewModel {
   ReposHeaderViewModel();
 
   ReposHeaderViewModel.fromHttpMap(ownerName, reposName, Repository map) {
+
+    this.ownerName = ownerName;
     if (map == null || map.owner == null) {
       return;
     }
-
     this.ownerPic = map.owner.avatar_url;
     this.repositoryName = reposName;
     this.allIssueCount = map.allIssueCount;

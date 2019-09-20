@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/common/model/Event.dart';
+import 'package:flutter_github_app/common/model/RepoCommit.dart';
 import 'package:flutter_github_app/common/utils/common_utils.dart';
 import 'package:flutter_github_app/common/utils/event_utils.dart';
 import 'package:flutter_github_app/common/style/gsy_style.dart';
 import 'package:flutter_github_app/widget/gsy_user_icon_widget.dart';
 import 'package:flutter_github_app/common/utils/navigator_utils.dart';
 import 'package:flutter_github_app/widget/gsy_card_item.dart';
+import 'package:flutter_github_app/common/model/Notification.dart' as Model;
 
 class EventItem extends StatelessWidget {
 
@@ -90,11 +92,19 @@ class EventViewModel {
     actionTarget = other["actionStr"];
   }
 
-  EventViewModel.fromCommitMap() {
-
+  EventViewModel.fromCommitMap(RepoCommit eventMap) {
+    actionTime = CommonUtils.getNewsTimeStr(eventMap.commit.committer.date);
+    actionUser = eventMap.commit.committer.name;
+    actionDes = "sha:" + eventMap.sha;
+    actionTarget = eventMap.commit.message;
   }
 
-  EventViewModel.fromNotify() {
-
+  EventViewModel.fromNotify(BuildContext context, Model.Notification eventMap) {
+    actionTime = CommonUtils.getNewsTimeStr(eventMap.updateAt);
+    actionUser = eventMap.repository.fullName;
+    String type = eventMap.subject.type;
+    String status = eventMap.unread ? CommonUtils.getLocale(context).notify_unread : CommonUtils.getLocale(context).notify_readed;
+    actionDes = eventMap.reason + "${CommonUtils.getLocale(context).notify_type}：$type，${CommonUtils.getLocale(context).notify_status}：$status";
+    actionTarget = eventMap.subject.title;
   }
 }

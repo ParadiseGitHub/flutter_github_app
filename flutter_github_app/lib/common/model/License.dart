@@ -8,5 +8,7 @@ class License {
 
   License(this.name);
 
+  factory License.fromJson(Map<String, dynamic> json) => _$LicenseFromJson(json);
 
+  Map<String, dynamic> toJson() => _$LicenseToJson(this);
 }

@@ -86,29 +86,19 @@ class _GSYTabBarWidgetState extends State<GSYTabBarWidget> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    // 底部TabBar模式
-    return Scaffold(
-      drawer: _drawer,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: widget.title,
-      ),
-      body: PageView(
-        controller: _pageController,
-        children: _tabViews,
-        onPageChanged: (index) {
-          _tabController.animateTo(index);
-          _onPageChanged?.call(index);
-        },
-      ),
-      bottomNavigationBar: Material(
-        // 适配主题，包一层Material实现风格套用
-        color: Theme.of(context).primaryColor,
-        child: SafeArea(
-          child: TabBar(
-            // TabBar放到Scaffold的bottomNavigationBar中
-            tabs: widget.tabItems,
+    if (this._type == GSYTabBarWidget.TOP_TAB) {
+      return Scaffold(
+        resizeToAvoidBottomPadding: widget.resizeToAvoidBottomPadding,
+        floatingActionButton: SafeArea(
+          child: _floatingActionButton ?? Container()),
+        floatingActionButtonLocation: widget.floatingActionButtonLocation,
+        persistentFooterButtons: _tarWidgetControl == null ? null : _tarWidgetControl.footerButton,
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          title: widget.title,
+          bottom: TabBar(
             controller: _tabController,
+            tabs: widget.tabItems,
             indicatorColor: _indicatorColor,
             onTap: (index) {
               _onPageChanged?.call(index);
@@ -116,8 +106,51 @@ class _GSYTabBarWidgetState extends State<GSYTabBarWidget> with SingleTickerProv
             },
           ),
         ),
-      ),
-    );
+        body: PageView(
+          controller: _pageController,
+          children: _tabViews,
+          onPageChanged: (index) {
+            _tabController.animateTo(index);
+            _onPageChanged?.call(index);
+          },
+        ),
+        bottomNavigationBar: widget.bottomBar,
+      );
+
+    } else {
+      // 底部TabBar模式
+      return Scaffold(
+        drawer: _drawer,
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          title: widget.title,
+        ),
+        body: PageView(
+          controller: _pageController,
+          children: _tabViews,
+          onPageChanged: (index) {
+            _tabController.animateTo(index);
+            _onPageChanged?.call(index);
+          },
+        ),
+        bottomNavigationBar: Material(
+          // 适配主题，包一层Material实现风格套用
+          color: Theme.of(context).primaryColor,
+          child: SafeArea(
+            child: TabBar(
+              // TabBar放到Scaffold的bottomNavigationBar中
+              tabs: widget.tabItems,
+              controller: _tabController,
+              indicatorColor: _indicatorColor,
+              onTap: (index) {
+                _onPageChanged?.call(index);
+                _pageController.jumpTo(MediaQuery.of(context).size.width * index);
+              },
+            ),
+          ),
+        ),
+      );
+    }
   }
 }
 

@@ -14,7 +14,7 @@ class RepositoryDetailReadmePage extends StatefulWidget {
 
   final String repoName;
 
-  RepositoryDetailReadmePage(this.userName, this.repoName, Key key) : super(key: key);
+  RepositoryDetailReadmePage(this.userName, this.repoName, {Key key}) : super(key: key);
 
   @override
   RepositoryDetailReadmePageState createState() => RepositoryDetailReadmePageState();

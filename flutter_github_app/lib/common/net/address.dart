@@ -43,6 +43,28 @@ class Address {
     return "${host}user/subscriptions/$userName/$repoName";
   }
 
+  ///仓库活动 get
+  static getReposEvent(reposOwner, reposName) {
+    return "${host}networks/$reposOwner/$reposName/events";
+  }
+  ///仓库详情 get
+  static getReposDetail(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName";
+  }
+
+  ///仓库提交 get
+  static getReposCommits(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName/commits";
+  }
+
+  ///仓库Issue get
+  static getReposIssue(reposOwner, reposName, state, sort, direction) {
+    state ??= 'all';
+    sort ??= 'created';
+    direction ??= 'desc';
+    return "${host}repos/$reposOwner/$reposName/issues?state=$state&sort=$sort&direction=$direction";
+  }
+
   ///README 文件地址 get
   static readmeFile(reposNameFullName, curBranch) {
     return host + "repos/" + reposNameFullName + "/" + "readme" + ((curBranch == null) ? "" : ("?ref=" + curBranch));

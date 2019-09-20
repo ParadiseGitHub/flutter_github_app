@@ -3,6 +3,13 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'package:flutter_github_app/common/config/config.dart';
+import 'package:flutter_github_app/common/model/Event.dart';
+import 'package:flutter_github_app/common/model/RepoCommit.dart';
+import 'package:flutter_github_app/common/model/Repository.dart';
+import 'package:flutter_github_app/common/model/User.dart';
 import 'package:flutter_github_app/common/net/address.dart';
 import 'package:flutter_github_app/common/net/http_manager.dart';
 import 'package:flutter_github_app/common/model/TrendingRepoModel.dart';
@@ -53,12 +60,105 @@ class ReposDao {
 
   ///仓库的详情数据
   static getRepositoryDetailDao(userName, repoName, branch, {needDb = true}) async {
+    String fullName = userName + "/" + repoName;
+//    RepositoryDetailDbProvider provider = new RepositoryDetailDbProvider();
 
+    next() async {
+      String url = Address.getReposDetail(userName, repoName) + "?ref=" + branch;
+      var res = await httpManager.netFetch(url, null,
+          {"Accept": 'application/vnd.github.mercy-preview+json'}, null);
+      if (res != null && res.result && res.data.length > 0) {
+        var data = res.data;
+        if (data == null || data.length == 0) {
+          return new DataResult(null, false);
+        }
+        Repository repository = Repository.fromJson(data);
+        var issueResult =
+        await ReposDao.getRepositoryIssueStatusDao(userName, repoName);
+        if (issueResult != null && issueResult.result) {
+          repository.allIssueCount = int.parse(issueResult.data);
+        }
+        if (needDb) {
+//          provider.insert(fullName, json.encode(repository.toJson()));
+        }
+//        saveHistoryDao(fullName, DateTime.now(), json.encode(repository.toJson()));
+        return new DataResult(repository, true);
+      } else {
+        return new DataResult(null, false);
+      }
+    }
+
+    if (needDb) {
+//      Repository repository = await provider.getRepository(fullName);
+//      if (repository == null) {
+//        return await next();
+//      }
+//      DataResult dataResult = new DataResult(repository, true, next: next);
+//      return dataResult;
+    }
+    return await next();
+  }
+
+  ///获取issue总数
+  static getRepositoryIssueStatusDao(userName, repository) async {
+    String url = Address.getReposIssue(userName, repository, null, null, null) +
+        "&per_page=1";
+    var res = await httpManager.netFetch(url, null, null, null);
+    if (res != null && res.result && res.headers != null) {
+      try {
+        List<String> link = res.headers['link'];
+        if (link != null) {
+          int indexStart = link[0].lastIndexOf("page=") + 5;
+          int indexEnd = link[0].lastIndexOf(">");
+          if (indexStart >= 0 && indexEnd >= 0) {
+            String count = link[0].substring(indexStart, indexEnd);
+            return new DataResult(count, true);
+          }
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+    return new DataResult(null, false);
   }
 
   ///仓库活动事件
   static getRepositoryEventDao(userName, repoName, {page = 0, branch = "master", needDb = false}) async {
+    String fullName = userName + "/" + repoName;
 
+//    RepositoryEventDbProvider provider = new RepositoryEventDbProvider();
+
+    next() async {
+      String url = Address.getReposEvent(userName, repoName) +
+                   Address.getPageParams("?", page);
+      var res = await httpManager.netFetch(url, null, null, null);
+      if (res != null && res.result) {
+        List<Event> list = List();
+        var data = res.data;
+        if (data == null || data.length == 0) {
+          return DataResult(null, false);
+        }
+        for (int i = 0; i < data.length; i++) {
+          list.add(Event.fromJson(data[i]));
+        }
+        if (needDb) {
+//          provider.insert(fullName, json.encode(data));
+        }
+        return DataResult(list, true);
+      } else {
+        return DataResult(null , false);
+      }
+    }
+
+    if (needDb) {
+//      List<Event> list = await provider.getEvents(fullName);
+//      if (list == null) {
+//        return await next();
+//      }
+//      DataResult dataResult = new DataResult(list, true, next: next);
+//      return dataResult;
+    }
+    return await next();
   }
 
   ///获取用户对当前仓库的star、watch状态
@@ -74,8 +174,43 @@ class ReposDao {
   }
 
   ///获取仓库的提交列表
-  static getRepositoryCommitsDao(userName, repoName, {page = 0, branch = "master", needDb = false}) async {
+  static getReposCommitsDao(userName, repoName, {page = 0, branch = "master", needDb = false}) async {
+    String fullName = userName + "/" + repoName;
 
+//    RepositoryCommitsDbProvider provider = new RepositoryCommitsDbProvider();
+
+    next() async {
+      String url = Address.getReposCommits(userName, repoName) +
+                   Address.getPageParams("?", page) + "&sha=" + branch;
+
+      var res = await httpManager.netFetch(url, null, null, null);
+      if (res != null && res.result) {
+        List<RepoCommit> list = List();
+        var data = res.data;
+        if (data == null || data.length == 0) {
+          return DataResult(null, false);
+        }
+        for (int i = 0; i < data.length; i++) {
+          list.add(RepoCommit.fromJson(data[i]));
+        }
+        if (needDb) {
+//          provider.insert(fullName, branch, json.encode(data));
+        }
+        return DataResult(list, true);
+      } else {
+        return DataResult(null, false);
+      }
+    }
+
+    if (needDb) {
+//      List<RepoCommit> list = await provider.getData(fullName, branch);
+//      if (list == null) {
+//        return await next();
+//      }
+//      DataResult dataResult = DataResult(list, true, next: next);
+//      return dataResult;
+    }
+    return await next();
   }
 
   ///获取仓库的文件列表
